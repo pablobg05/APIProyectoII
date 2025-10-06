@@ -1,4 +1,4 @@
-module.exports = (Sequelize, sequelize) => {
+module.exports = (sequelize, Sequelize) => {
     const Localidad = sequelize.define("localidad", {
         id_localidad: {
             type: Sequelize.INTEGER,
