@@ -23,5 +23,6 @@ db.sequelize = sequelize;
 
 db.usuario = require("./usuario.model.js")(sequelize, Sequelize);
 db.partido = require("./partido.model.js")(sequelize, Sequelize);
+db.localidad = require("./localidad.model.js")(sequelize, Sequelize);
 
 module.exports = db;
