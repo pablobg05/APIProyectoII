@@ -32,6 +32,9 @@ app.get("/", (req, res) => {
 require("./app/routes/usuario.router.js")(app);
 require("./app/routes/partido.router.js")(app);
 require("./app/routes/localidad.router.js")(app);
+require("./app/routes/detalle.router.js")(app);
+require("./app/routes/inventario.router.js")(app);
+require("./app/routes/ventas.router.js")(app);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

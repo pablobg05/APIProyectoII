@@ -62,7 +62,7 @@ exports.findPartidos = async (req, res) => {
 
 // Actualizar un Partido por el id en la solicitud
 exports.update = async (req, res) => {
-    const id = req.params.id;
+    const id = req.params.id_partido;
     if (!id) return res.status(400).send({ message: 'id_partido is required.' });
 
     try {

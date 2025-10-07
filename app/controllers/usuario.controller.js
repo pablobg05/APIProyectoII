@@ -12,13 +12,10 @@ exports.create = async (req, res) => {
     }
 
     try {
-        // Hashear la contraseña antes de crear
-        const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-
-        // Crear un Usuario
+        // Crear un Usuario (el hashing se realiza en el setter del modelo)
         const usuario = {
             username: req.body.username,
-            password: hashedPassword,
+            password: req.body.password,
             nombre: req.body.nombre,
             rol: req.body.rol || 'user'  // valor por defecto 'user'
         };
@@ -72,9 +69,17 @@ exports.update = async (req, res) => {
 
     try {
         const payload = { ...req.body };
-        // Si se envía password, hashearla antes de actualizar
+        // Si se envía password, usar instance.save() para que el setter del modelo aplique el hash
         if (payload.password) {
-            payload.password = bcrypt.hashSync(payload.password, 10);
+            const userInstance = await Usuario.findByPk(id);
+            if (!userInstance) return res.status(404).send({ message: `Cannot find Usuario with id=${id}.` });
+            userInstance.set('password', payload.password);
+            // set other fields
+            Object.keys(payload).forEach(key => {
+                if (key !== 'password') userInstance.set(key, payload[key]);
+            });
+            await userInstance.save();
+            return res.status(200).send({ message: "Usuario was updated successfully." });
         }
 
         const result = await Usuario.update(payload, {
