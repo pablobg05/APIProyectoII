@@ -17,10 +17,12 @@ module.exports = (sequelize, DataTypes) => {
                 len: [8, 72]
             },
             set(value) {
-                const bcrypt = require('bcrypt');
-                const salt = bcrypt.genSaltSync(10);
-                const hash = bcrypt.hashSync(value, salt);
-                this.setDataValue('password', hash);
+                if(value){
+                    const bcrypt = require('bcrypt');
+                    const salt = bcrypt.genSaltSync(10);
+                    const hash = bcrypt.hashSync(value, salt);
+                    this.setDataValue('password', hash);
+                }
             }
         },
         nombre: {
